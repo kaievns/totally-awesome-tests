@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "totally-awesome-test"
-
-Totes.kick_in
+require "totally-awesome-tests"
+require "totes/autorun"

@@ -1,7 +1,4 @@
 module Totes
-  def self.kick_in
-    puts "Scratch my bellah!"
-  end
+  autoload :VERSION, "totes/version"
+  autoload :Runner,  "totes/runner"
 end
-
-require_relative "./totes/version"
