@@ -21,10 +21,20 @@ module Totes
     end
 
     def print_help
-      puts "totes [source...]"
-      exit
+      print_nicely_and_exit %Q{
+        Totally awesome tests usage:
+
+          totes [path ...] [OPTIONS]
+
+        OPTIONS:
+          -h, --help    # show this help
+      }
     end
 
+    def print_nicely_and_exit(string)
+      print string.gsub(string[/\A(\n +)/], "\n").strip + "\n\n"
+      exit
+    end
 
   end
 end

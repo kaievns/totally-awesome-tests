@@ -12,14 +12,14 @@ module Totes
       @specs << self.class.new(*args, &block)
     end
 
-    # returns the _subject_ matcher
+    # returns the _subject_ query object
     def it
-      Totes::Matcher.new(@subject)
+      Totes::Query.new(@subject)
     end
 
-    # builds the queries
-    def method_missing(name, *args, &block)
-      puts "query: #{name} - #{args}"
+    # builds the matchers
+    def method_missing(*args, &block)
+      Totes::Matcher.build(*args, &block) || super(*args, &block)
     end
 
   private
