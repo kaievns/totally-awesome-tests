@@ -8,11 +8,21 @@ module Totes
     end
 
     def must(matcher)
-      matcher.test(@subject, fail_on: false)
+      try { matcher.test(@subject, fail_on: false) }
     end
 
     def wont(matcher)
-      matcher.test(@subject, fail_on: true)
+      try { matcher.test(@subject, fail_on: true) }
+    end
+
+  private
+
+    def try(&block)
+      yield
+
+      Totes::Reporter.inst.passed self
+    rescue Totes::Error => e
+      Totes::Reporter.inst.failed e
     end
   end
 end
