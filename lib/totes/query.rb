@@ -3,22 +3,16 @@
 #
 module Totes
   class Query
-    Error = Class.new(StandardError)
-
     def initialize(subject)
       @subject = subject
     end
 
     def must(matcher)
-      if !matcher.likes(@subject)
-        fail Error, matcher.failure
-      end
+      matcher.test(@subject, fail_on: false)
     end
 
     def wont(matcher)
-      if matcher.likes(@subject)
-        fail Error, matcher.failure(false)
-      end
+      matcher.test(@subject, fail_on: true)
     end
   end
 end

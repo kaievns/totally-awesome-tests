@@ -1,16 +1,10 @@
 module Totes
   class Matcher::Be < Totes::Matcher
-    def likes(subject)
-      @subject = subject
-      @value === @subject
-    end
+    error_must "expected %{subject} to be the same as %{value}"
+    error_wont "expected %{subject} not to be the same as %{value}"
 
-    def failure(positive=true)
-      if positive
-        "expected #{@subject} to be #{@value}, but it ain't"
-      else
-        "expected #{@subject} ain't be #{@value}, but was"
-      end
+    def likes(subject)
+      subject === @value
     end
   end
 end

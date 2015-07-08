@@ -8,6 +8,7 @@ module Totes
   autoload :Spec,     "#{dir}/totes/spec"
   autoload :Matcher,  "#{dir}/totes/matcher"
   autoload :Query,    "#{dir}/totes/query"
+  autoload :Error,    "#{dir}/totes/error"
 end
 
 require_relative "./totes/kernel"
