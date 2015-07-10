@@ -44,6 +44,10 @@ module Totes
       end
     end
 
+    def likes(subject)
+      raise "#{self.class.name}#likes(subject) is not implemented yet"
+    end
+
   private
 
     def fail(subject, positive: true)

@@ -1,13 +1,9 @@
 describe Totes::Matcher::Be do
   value   = "string"
-  matcher = subject.new(value)
 
-  describe matcher.likes(value) do
-    it.must be true
+  describe subject.new(value) do
+    it.likes(value).must be true
+    it.likes("other value").must be false
   end
-
-  describe matcher.likes("other value") do
-    it.must be false
-  end
-
+  
 end

@@ -17,6 +17,10 @@ module Totes
       Totes::Query.new(@subject)
     end
 
+    def its
+      Totes::Query.new(@subject)
+    end
+
     # builds the matchers
     def method_missing(*args, &block)
       Totes::Matcher.build(*args, &block) || super(*args, &block)

@@ -15,6 +15,10 @@ module Totes
       try { matcher.test(@subject, fail_on: true) }
     end
 
+    def method_missing(*args, &block)
+      Totes::Query.new(@subject.__send__ *args, &block)
+    end
+
   private
 
     def try(&block)

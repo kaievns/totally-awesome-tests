@@ -24,6 +24,8 @@ module Totes
 
     def summary
       seconds = Time.new - @time
+      # ✔︎
+      # ✖︎
       puts "\n\nTests: %d, Failed: %d (%.2f seconds, %.2f tests/sec)\n" % [
         @tests, @fails.size, seconds, @tests / seconds
       ]

@@ -1,11 +1,8 @@
 describe Totes::Matcher::RespondTo do
-  matcher = subject.new("empty?")
 
-  describe matcher.likes("string") do
-    it.must be true
+  describe subject.new("empty?") do
+    it.likes("string").must be true
+    it.likes(Class).must be false
   end
 
-  describe matcher.likes(boolean = false) do
-    it.must be false
-  end
 end
