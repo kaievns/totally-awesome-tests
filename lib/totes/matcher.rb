@@ -10,7 +10,8 @@ module Totes
 
     ALIASES = {
       eq:    "eql",
-      be_an: "be_a"
+      be_an: "be_a",
+      :== => "eql"
     }
 
     def self.build(name, *args, &block)

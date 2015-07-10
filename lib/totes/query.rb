@@ -7,12 +7,20 @@ module Totes
       @subject = subject
     end
 
-    def must(matcher)
-      try { matcher.test(@subject, fail_on: false) }
+    def must(*args)
+      if matcher = args[0]
+        try { matcher.test(@subject, fail_on: false) }
+      else
+        OperationsWrapper.new(self, :must)
+      end
     end
 
-    def wont(matcher)
-      try { matcher.test(@subject, fail_on: true) }
+    def wont(*args)
+      if matcher = args[0]
+        try { matcher.test(@subject, fail_on: true) }
+      else
+        OperationsWrapper.new(self, :wont)
+      end
     end
 
     def method_missing(*args, &block)
@@ -35,6 +43,20 @@ module Totes
     rescue Totes::Error => e
       Totes::Backtrace.filter e
       Totes::Reporter.inst.failed e
+    end
+
+    # the naughty operations matchers wrapper
+    class OperationsWrapper
+      def initialize(query, method)
+        @query  = query
+        @method = method
+      end
+
+      [:==, :"!=", :=~, :<=, :>=, :<, :>].each do |operation|
+        define_method operation do |*args, &block|
+          @query.__send__ @method, Totes::Matcher.build(operation, *args, &block)
+        end
+      end
     end
   end
 end
