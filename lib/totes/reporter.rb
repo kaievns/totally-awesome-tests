@@ -26,7 +26,7 @@ module Totes
       seconds = Time.new - @time
       # ✔︎
       # ✖︎
-      puts "\n\nTests: %d, Failed: %d (%.2f seconds, %.2f tests/sec)\n" % [
+      puts "\n\nTests: %d, Failed: %d (%.1f seconds, %.1f tests/sec)\n" % [
         @tests, @fails.size, seconds, @tests / seconds
       ]
     end

@@ -1,25 +1,40 @@
 module Totes
   class Spec
-    attr_reader :subject, :block, :specs
+    attr_reader :subject
+
+    StartOver = Class.new(StandardError)
 
     def initialize(*args, &block)
-      @subject = find_subject(*args)
-      @block   = block
-      @specs   = []
+      @subject = __get_subject__(*args)
+      @__block = block
+      @__specs = [] # inner specs list
+      @__count = {
+        queries: 0, # global queries counter
+        current: 0  # the current query marker
+      }
     end
 
     def describe(*args, &block)
-      @specs << self.class.new(*args, &block)
+      @__specs << self.class.new(*args, &block).tap do |spec|
+        spec.instance_variable_set("@__count", @__count)
+      end
     end
 
     # returns the _subject_ query object
     def it
-      Totes::Query.new(@subject)
+      if @__count[:current] == @__count[:queries]
+        @__count[:queries] += 1
+        Totes::Query.new(@subject) # going in for real
+      elsif @__count[:current] > @__count[:queries]
+        @__count[:queries] += 1
+        SkipQuery.new # rerunning through a previous query, skipping
+      else
+        @__count[:current] += 1 # switching to the next query
+        raise StartOver
+      end
     end
 
-    def its
-      Totes::Query.new(@subject)
-    end
+    alias :its :it # more readable on subqueries
 
     # builds the matchers
     def method_missing(*args, &block)
@@ -28,8 +43,17 @@ module Totes
 
   private
 
-    def find_subject(*args)
+    def __get_subject__(*args)
       return args[0] # TODO make it smarter
+    end
+
+    class SkipQuery
+      def must(*args); end # don't trigger the matchers
+      def wont(*args); end # don't trigger the matchers
+
+      def method_missing(*args, &block)
+        self # endlessly return self
+      end
     end
   end
 end
