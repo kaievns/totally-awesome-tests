@@ -16,6 +16,9 @@ module Totes
     def run
       @specs.each { |spec| loop_through spec }
       Totes::Reporter.inst.summary
+    rescue StandardError => e
+      Totes::Backtrace.filter e
+      raise e
     end
 
   private

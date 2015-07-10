@@ -54,6 +54,13 @@ module Totes
       def method_missing(*args, &block)
         self # endlessly return self
       end
+
+      # passing core methods (like :to_s and so on onto the subject as well)
+      (Class.new.instance_methods - [:__send__, :__id__, :object_id]).each do |core_method|
+        define_method core_method do |*args, &block|
+          method_missing core_method, *args, &block
+        end
+      end
     end
   end
 end

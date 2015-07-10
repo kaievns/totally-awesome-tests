@@ -19,6 +19,13 @@ module Totes
       Totes::Query.new(@subject.__send__ *args, &block)
     end
 
+    # passing core methods (like :to_s and so on onto the subject as well)
+    (Class.new.instance_methods - [:__send__, :__id__, :object_id, :is_a?, :==]).each do |core_method|
+      define_method core_method do |*args, &block|
+        method_missing core_method, *args, &block
+      end
+    end
+
   private
 
     def try(&block)
@@ -26,6 +33,7 @@ module Totes
 
       Totes::Reporter.inst.passed self
     rescue Totes::Error => e
+      Totes::Backtrace.filter e
       Totes::Reporter.inst.failed e
     end
   end

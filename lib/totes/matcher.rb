@@ -56,7 +56,7 @@ module Totes
 
     def build_error(subject, positive)
       template = positive ? self.class.error_must : self.class.error_wont
-      template % {subject: subject}.merge(find_params_in(template))
+      template % {subject: subject.inspect}.merge(find_params_in(template))
     end
 
     def find_params_in(template)
@@ -65,7 +65,7 @@ module Totes
           var_name = match[0].to_sym
 
           if instance_variable_defined?("@#{var_name}")
-            params[var_name] = instance_variable_get("@#{var_name}")
+            params[var_name] = instance_variable_get("@#{var_name}").inspect
           end
         end
       end
