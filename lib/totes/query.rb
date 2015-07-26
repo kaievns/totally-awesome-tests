@@ -2,41 +2,34 @@
 # Represents the subject query (the left side of the assertions)
 #
 module Totes
-  class Query
+  class Query < Noop
     def initialize(subject)
-      @subject = subject
+      @subject = Totes::Subject.new(subject)
     end
 
-    def must(*args)
+    def must(*args, &block)
       if matcher = args[0]
-        try { matcher.test(@subject, fail_on: false) }
+        __try__ { matcher.test(@subject, fail_on: false) }
       else
         OperationsWrapper.new(self, :must)
       end
     end
 
-    def wont(*args)
+    def wont(*args, &block)
       if matcher = args[0]
-        try { matcher.test(@subject, fail_on: true) }
+        __try__ { matcher.test(@subject, fail_on: true) }
       else
         OperationsWrapper.new(self, :wont)
       end
     end
 
-    def method_missing(*args, &block)
-      Totes::Query.new(@subject.__send__ *args, &block)
-    end
-
-    # passing core methods (like :to_s and so on onto the subject as well)
-    (Class.new.instance_methods - [:__send__, :__id__, :object_id, :is_a?, :==]).each do |core_method|
-      define_method core_method do |*args, &block|
-        method_missing core_method, *args, &block
-      end
+    def method_missing(name, *args, &block)
+      Totes::Query.new(@subject.__send__ name, *args, &block)
     end
 
   private
 
-    def try(&block)
+    def __try__(&block)
       yield
 
       Totes::Reporter.inst.passed self

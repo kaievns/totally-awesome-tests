@@ -39,7 +39,7 @@ module Totes
       @fails.each do |error|
         puts "\n\e[31mERROR: #{error.message}\e[0m"
         error.backtrace.each do |line|
-          puts "\e[;2m#{line.gsub Dir.pwd+"/", ""}\e[0m"
+          puts " \e[;2m#{line.gsub Dir.pwd+"/", ""}\e[0m"
         end
       end
     end

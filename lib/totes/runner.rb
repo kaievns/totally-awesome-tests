@@ -32,9 +32,7 @@ module Totes
 
     def exec(specs)
       specs.each do |spec|
-        block = spec.instance_variable_get("@__block")
-        spec.instance_eval &block
-
+        spec.instance_eval &spec.instance_variable_get("@__block")
         exec spec.instance_variable_get("@__specs")
       end
     end

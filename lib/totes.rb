@@ -6,6 +6,8 @@ module Totes
   autoload :Resolver,  "#{dir}/totes/resolver"
   autoload :Runner,    "#{dir}/totes/runner"
   autoload :Spec,      "#{dir}/totes/spec"
+  autoload :Noop,      "#{dir}/totes/noop"
+  autoload :Subject,   "#{dir}/totes/subject"
   autoload :Matcher,   "#{dir}/totes/matcher"
   autoload :Query,     "#{dir}/totes/query"
   autoload :Error,     "#{dir}/totes/error"
