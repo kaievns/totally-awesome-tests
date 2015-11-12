@@ -1,6 +1,8 @@
-# Totess
+# Totes
 
 Like \*Test but totally awesome.
+
+__NOTE__: this is just an experiment in building a testing framework in a different way. Like totally WIP
 
 ## Installation
 
