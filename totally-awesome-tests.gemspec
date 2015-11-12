@@ -9,9 +9,10 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Nikolay Nemshilov"]
   spec.email         = ["nemshilov@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Like totally awesome testing framework}
+  spec.description   = %q{Like totally awesome testing framework. Did I mention "totally" already?}
+  spec.homepage      = "https://github.com/MadRabbit/totally-awesome-tests"
+  spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "bin"
@@ -19,5 +20,4 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.9"
-  spec.add_development_dependency "rake", "~> 10.0"
 end
